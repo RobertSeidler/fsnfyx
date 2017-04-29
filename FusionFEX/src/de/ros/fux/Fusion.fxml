@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.canvas.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -9,4 +10,10 @@
    <center>
       <Canvas fx:id="canvas" height="410.0" onMouseClicked="#mouseClicked" onMouseMoved="#mouseMoved" width="492.0" BorderPane.alignment="CENTER" />
    </center>
+   <top>
+      <Label fx:id="whomsTurn" BorderPane.alignment="CENTER" />
+   </top>
+   <bottom>
+      <HBox fx:id="labelBox" alignment="BOTTOM_CENTER" prefHeight="51.0" prefWidth="492.0" spacing="50.0" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>
