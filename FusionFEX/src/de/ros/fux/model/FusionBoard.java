@@ -85,6 +85,7 @@ public class FusionBoard {
 
 	public void explode(int i, int j, int playerNr) {
 
+		player[i][j] = playerNr;
 		cells[i][j] = 0;
 
 		if (i != 0) {
@@ -137,7 +138,6 @@ public class FusionBoard {
 
 					if (player[i][j] == n + 1)
 						count[n]++;
-						System.out.println(count[n] + " : " + n);
 				}
 			}
 

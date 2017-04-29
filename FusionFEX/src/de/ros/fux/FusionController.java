@@ -1,10 +1,15 @@
 package de.ros.fux;
 
 import de.ros.fux.model.*;
+
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import de.ros.fux.model.FusionBoard;
+import de.ros.fux.tools.Config;
+import de.ros.fux.tools.ReadIn;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -16,19 +21,13 @@ import javafx.scene.paint.Paint;
 
 public class FusionController implements Initializable {
 
-	public final int STANDARD_BOARD_WIDTH = 6;
-	public final int STANDARD_BOARD_HEIGTH = 6;
-
-	private final int STANDARD_BORDER_WIDTH = 2;
-	private final int STANDARD_CELL_WIDTH = 50;
-	private final int STANDARD_CELL_HEIGTH = 50;
-
-	private final double WIN_PERCENTAGE = 0.8;
-
-	/**
-	 * max 4 for now
-	 */
-	private final int MAX_PLAYER = 2;
+	public int STANDARD_BOARD_WIDTH;
+	public int STANDARD_BOARD_HEIGTH;
+	private int STANDARD_BORDER_WIDTH;
+	private int STANDARD_CELL_WIDTH;
+	private int STANDARD_CELL_HEIGTH;
+	private double WIN_PERCENTAGE;
+	private int MAX_PLAYER;
 
 	public Canvas canvas;
 	public Label whomsTurn = new Label();
@@ -42,12 +41,23 @@ public class FusionController implements Initializable {
 
 	private Paint[] playerColors = new Paint[5];
 
-	private FusionBoard board = new FusionBoard(STANDARD_BOARD_WIDTH, STANDARD_BOARD_HEIGTH, MAX_PLAYER);
+	private FusionBoard board;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		
+		Config conf = ReadIn.readIniFile();
+		
+		STANDARD_BOARD_WIDTH = conf.getSTANDARD_BOARD_WIDTH();
+		STANDARD_BOARD_HEIGTH = conf.getSTANDARD_BOARD_HEIGTH();
+		STANDARD_BORDER_WIDTH = conf.getSTANDARD_BORDER_WIDTH();
+		STANDARD_CELL_WIDTH = conf.getSTANDARD_CELL_WIDTH();
+		STANDARD_CELL_HEIGTH = conf.getSTANDARD_CELL_HEIGTH();
+		WIN_PERCENTAGE = conf.getWIN_PERCENTAGE();
+		MAX_PLAYER = conf.getMAX_PLAYER();
 
+		board = new FusionBoard(STANDARD_BOARD_WIDTH, STANDARD_BOARD_HEIGTH, MAX_PLAYER);
+		
 		playerColors[0] = Paint.valueOf("black");
 		playerColors[1] = Paint.valueOf("blue");
 		playerColors[2] = Paint.valueOf("red");
@@ -65,7 +75,7 @@ public class FusionController implements Initializable {
 
 		}
 
-		board.generateRandomStartConfiguration(0.3, 0.5, 0);
+		board.generateRandomStartConfiguration(0.5, 0.7, 0.2);
 		drawBoard();
 	}
 
