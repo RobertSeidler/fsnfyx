@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 
+
 public class FusionController implements Initializable {
 
 	public int STANDARD_BOARD_WIDTH;

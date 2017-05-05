@@ -208,11 +208,20 @@ public class FusionBoard implements Serializable {
 
 	}
 	
+	/**
+	 * Removes Player from the board, sets Cell owner to 0 if cell is owned by the player that should be removed. 
+	 * @param player Player you want to remove
+	 */
 	public void removePlayer(int player){
-		
-		//TODO implement
-		
-		
+		playerPoints[player] = 0;
+		for (int i = 0; i < verticalCells; i++) {
+			for (int j = 0; j < horizontalCells; j++) {
+				if (this.player[i][j] == player) {
+					this.player[i][j] = 0;
+						
+				}
+			}
+		}		
 		
 	}
 	

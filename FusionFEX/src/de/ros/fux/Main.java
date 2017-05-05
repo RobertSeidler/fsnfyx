@@ -1,6 +1,6 @@
 package de.ros.fux;
 	
-import de.ros.fux.Controller.*;
+import de.ros.fux.FusionController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
