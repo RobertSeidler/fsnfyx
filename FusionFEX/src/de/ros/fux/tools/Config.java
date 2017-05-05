@@ -2,8 +2,9 @@ package de.ros.fux.tools;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class Config {
+public class Config implements Serializable{
 
 	private int STANDARD_BOARD_WIDTH; // 0
 	private int STANDARD_BOARD_HEIGTH; // 1
@@ -68,6 +69,10 @@ public class Config {
 
 	public int getMAX_PLAYER() {
 		return MAX_PLAYER;
+	}
+	
+	public void setMAX_PLAYER(int max){
+		MAX_PLAYER = max;
 	}
 
 }

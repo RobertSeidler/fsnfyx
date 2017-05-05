@@ -1,7 +1,11 @@
 package de.ros.fux.model;
 
-public class FusionBoard {
+import java.io.Serializable;
 
+public class FusionBoard implements Serializable {
+
+
+	private double winPercentage;
 	private int verticalCells;
 	private int horizontalCells;
 	private int playerCount;
@@ -18,11 +22,12 @@ public class FusionBoard {
 	private Integer[][] player;
 	private Integer[] playerPoints;
 
-	public FusionBoard(int verticalCells, int horizontalCells, int playerCount) {
+	public FusionBoard(int verticalCells, int horizontalCells, int playerCount, double winPercentage) {
 		super();
 		this.verticalCells = verticalCells;
 		this.horizontalCells = horizontalCells;
 		this.playerCount = playerCount;
+		this.winPercentage = winPercentage;
 		cells = new Integer[verticalCells][horizontalCells];
 		player = new Integer[verticalCells][horizontalCells];
 		for (int i = 0; i < verticalCells; i++) {
@@ -51,9 +56,17 @@ public class FusionBoard {
 		return horizontalCells;
 	}
 
-	public void addToCell(int x, int y, int player) {
-		cells[x][y]++;
-		this.player[x][y] = player;
+	public boolean addToCell(int x, int y, int player) {
+		if (player == getPlayerValue(x, y) || getCellValue(x, y) == 0) {
+			
+			cells[x][y]++;
+			this.player[x][y] = player;
+			checkForExplosion(player);
+			
+			return true;
+		}
+		
+		return false;
 	}
 
 	public boolean checkForExplosion(int playerNr) {
@@ -174,5 +187,34 @@ public class FusionBoard {
 				}
 			}
 	}
+	
+	public int checkWin() {
+
+		Integer[] scores = countPlayerPoints();
+
+		for (int n = 0; n < playerCount; n++) {
+
+//			playerLabels[n].setText("P" + (int) (n + 1) + ": " + scores[n]);
+
+			if (scores[n] >= (int) (Math.floor((horizontalCells * verticalCells) * winPercentage))) {
+
+//				whomsTurn.setText("OH, Player " + (n + 1) + " won!");
+//				whomsTurn.setTextFill(playerColors[n + 1]);#
+				return n;
+			}
+		}
+		
+		return 0;
+
+	}
+	
+	public void removePlayer(int player){
+		
+		//TODO implement
+		
+		
+		
+	}
+	
 
 }

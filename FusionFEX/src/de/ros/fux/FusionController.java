@@ -45,9 +45,9 @@ public class FusionController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		Config conf = ReadIn.readIniFile();
-		
+
 		STANDARD_BOARD_WIDTH = conf.getSTANDARD_BOARD_WIDTH();
 		STANDARD_BOARD_HEIGTH = conf.getSTANDARD_BOARD_HEIGTH();
 		STANDARD_BORDER_WIDTH = conf.getSTANDARD_BORDER_WIDTH();
@@ -56,8 +56,8 @@ public class FusionController implements Initializable {
 		WIN_PERCENTAGE = conf.getWIN_PERCENTAGE();
 		MAX_PLAYER = conf.getMAX_PLAYER();
 
-		board = new FusionBoard(STANDARD_BOARD_WIDTH, STANDARD_BOARD_HEIGTH, MAX_PLAYER);
-		
+		board = new FusionBoard(STANDARD_BOARD_WIDTH, STANDARD_BOARD_HEIGTH, MAX_PLAYER, WIN_PERCENTAGE);
+
 		playerColors[0] = Paint.valueOf("black");
 		playerColors[1] = Paint.valueOf("blue");
 		playerColors[2] = Paint.valueOf("red");
@@ -84,7 +84,6 @@ public class FusionController implements Initializable {
 		canvas.setWidth(STANDARD_BOARD_WIDTH * (STANDARD_CELL_WIDTH + STANDARD_BORDER_WIDTH * 2));
 		canvas.setHeight(STANDARD_BOARD_HEIGTH * (STANDARD_CELL_HEIGTH + STANDARD_BORDER_WIDTH * 2));
 
-		
 		// g.setFill(Paint.valueOf("black"));
 
 		// g.fillRect(0, 0, STANDARD_BOARD_WIDTH * (STANDARD_CELL_WIDTH +
@@ -114,7 +113,6 @@ public class FusionController implements Initializable {
 
 	private void drawCircles(int cellPosX, int cellPosY, int count, Paint color) {
 
-		
 		GraphicsContext g = canvas.getGraphicsContext2D();
 
 		g.setFill(color);
@@ -169,9 +167,10 @@ public class FusionController implements Initializable {
 		int x = getHorizontalCellFromMousePos(mouseX);
 		int y = getVerticalCellFromMousePos(mouseY);
 
-		if (player == board.getPlayerValue(x, y) || board.getCellValue(x, y) == 0) {
-			board.addToCell(getHorizontalCellFromMousePos(mouseX), getVerticalCellFromMousePos(mouseY), player);
-			board.checkForExplosion(player);
+		// if (player == board.getPlayerValue(x, y) || board.getCellValue(x, y)
+		// == 0)
+		if (board.addToCell(x, y, player)) {
+			// board.checkForExplosion(player);
 			drawFrameWithColor();
 			for (int i = 0; i < STANDARD_BOARD_WIDTH; i++) {
 				for (int j = 0; j < STANDARD_BOARD_HEIGTH; j++) {
@@ -188,7 +187,6 @@ public class FusionController implements Initializable {
 
 			nextPlayer();
 			updatePlayerScoreAndCheckWin();
-			
 
 		}
 
@@ -239,7 +237,8 @@ public class FusionController implements Initializable {
 				g.setFill(playerColors[board.getPlayerValue(i, j)]);
 				g.fillRect(i * STANDARD_CELL_WIDTH + 2 * i * STANDARD_BORDER_WIDTH,
 						j * STANDARD_CELL_HEIGTH + 2 * j * STANDARD_BORDER_WIDTH,
-						STANDARD_CELL_WIDTH + 2* STANDARD_BORDER_WIDTH, STANDARD_CELL_HEIGTH + 2* STANDARD_BORDER_WIDTH);
+						STANDARD_CELL_WIDTH + 2 * STANDARD_BORDER_WIDTH,
+						STANDARD_CELL_HEIGTH + 2 * STANDARD_BORDER_WIDTH);
 			}
 		}
 
